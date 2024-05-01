@@ -1,0 +1,332 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="db_PLModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tblMstCity">
+          <Key>
+            <PropertyRef Name="CityId" />
+          </Key>
+          <Property Name="CityId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CityName" Type="varchar" MaxLength="80" />
+          <Property Name="StateId" Type="int" />
+        </EntityType>
+        <EntityType Name="tblMstCountry">
+          <Key>
+            <PropertyRef Name="CountryId" />
+          </Key>
+          <Property Name="CountryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CountryName" Type="varchar" MaxLength="80" />
+        </EntityType>
+        <EntityType Name="tblMstState">
+          <Key>
+            <PropertyRef Name="StateId" />
+          </Key>
+          <Property Name="StateId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StateName" Type="varchar" MaxLength="80" />
+          <Property Name="CountryId" Type="int" />
+        </EntityType>
+        <EntityType Name="tblUserInfo">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Mobile" Type="varchar" MaxLength="15" />
+          <Property Name="CountryId" Type="int" />
+          <Property Name="StateId" Type="int" />
+          <Property Name="CityId" Type="int" />
+          <Property Name="Pincode" Type="char" MaxLength="6" />
+        </EntityType>
+        <Association Name="FK_tblMstCity_tblMstState">
+          <End Role="tblMstState" Type="Self.tblMstState" Multiplicity="0..1" />
+          <End Role="tblMstCity" Type="Self.tblMstCity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblMstState">
+              <PropertyRef Name="StateId" />
+            </Principal>
+            <Dependent Role="tblMstCity">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblMstState_tblMstCountry1">
+          <End Role="tblMstCountry" Type="Self.tblMstCountry" Multiplicity="0..1" />
+          <End Role="tblMstState" Type="Self.tblMstState" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblMstCountry">
+              <PropertyRef Name="CountryId" />
+            </Principal>
+            <Dependent Role="tblMstState">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblUserInfo_tblMstCity1">
+          <End Role="tblMstCity" Type="Self.tblMstCity" Multiplicity="0..1" />
+          <End Role="tblUserInfo" Type="Self.tblUserInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblMstCity">
+              <PropertyRef Name="CityId" />
+            </Principal>
+            <Dependent Role="tblUserInfo">
+              <PropertyRef Name="CityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblUserInfo_tblMstCountry">
+          <End Role="tblMstCountry" Type="Self.tblMstCountry" Multiplicity="0..1" />
+          <End Role="tblUserInfo" Type="Self.tblUserInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblMstCountry">
+              <PropertyRef Name="CountryId" />
+            </Principal>
+            <Dependent Role="tblUserInfo">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblUserInfo_tblMstState">
+          <End Role="tblMstState" Type="Self.tblMstState" Multiplicity="0..1" />
+          <End Role="tblUserInfo" Type="Self.tblUserInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblMstState">
+              <PropertyRef Name="StateId" />
+            </Principal>
+            <Dependent Role="tblUserInfo">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="db_PLModelStoreContainer">
+          <EntitySet Name="tblMstCity" EntityType="Self.tblMstCity" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblMstCountry" EntityType="Self.tblMstCountry" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblMstState" EntityType="Self.tblMstState" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblUserInfo" EntityType="Self.tblUserInfo" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tblMstCity_tblMstState" Association="Self.FK_tblMstCity_tblMstState">
+            <End Role="tblMstState" EntitySet="tblMstState" />
+            <End Role="tblMstCity" EntitySet="tblMstCity" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblMstState_tblMstCountry1" Association="Self.FK_tblMstState_tblMstCountry1">
+            <End Role="tblMstCountry" EntitySet="tblMstCountry" />
+            <End Role="tblMstState" EntitySet="tblMstState" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblUserInfo_tblMstCity1" Association="Self.FK_tblUserInfo_tblMstCity1">
+            <End Role="tblMstCity" EntitySet="tblMstCity" />
+            <End Role="tblUserInfo" EntitySet="tblUserInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblUserInfo_tblMstCountry" Association="Self.FK_tblUserInfo_tblMstCountry">
+            <End Role="tblMstCountry" EntitySet="tblMstCountry" />
+            <End Role="tblUserInfo" EntitySet="tblUserInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblUserInfo_tblMstState" Association="Self.FK_tblUserInfo_tblMstState">
+            <End Role="tblMstState" EntitySet="tblMstState" />
+            <End Role="tblUserInfo" EntitySet="tblUserInfo" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="db_PLModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tblMstCity">
+          <Key>
+            <PropertyRef Name="CityId" />
+          </Key>
+          <Property Name="CityId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CityName" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="StateId" Type="Int32" />
+          <NavigationProperty Name="tblMstState" Relationship="Self.FK_tblMstCity_tblMstState" FromRole="tblMstCity" ToRole="tblMstState" />
+          <NavigationProperty Name="tblUserInfoes" Relationship="db_PLModel.FK_tblUserInfo_tblMstCity1" FromRole="tblMstCity" ToRole="tblUserInfo" />
+        </EntityType>
+        <EntityType Name="tblMstCountry">
+          <Key>
+            <PropertyRef Name="CountryId" />
+          </Key>
+          <Property Name="CountryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CountryName" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblMstStates" Relationship="Self.FK_tblMstState_tblMstCountry1" FromRole="tblMstCountry" ToRole="tblMstState" />
+          <NavigationProperty Name="tblUserInfoes" Relationship="db_PLModel.FK_tblUserInfo_tblMstCountry" FromRole="tblMstCountry" ToRole="tblUserInfo" />
+        </EntityType>
+        <EntityType Name="tblMstState">
+          <Key>
+            <PropertyRef Name="StateId" />
+          </Key>
+          <Property Name="StateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StateName" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="CountryId" Type="Int32" />
+          <NavigationProperty Name="tblMstCities" Relationship="Self.FK_tblMstCity_tblMstState" FromRole="tblMstState" ToRole="tblMstCity" />
+          <NavigationProperty Name="tblMstCountry" Relationship="Self.FK_tblMstState_tblMstCountry1" FromRole="tblMstState" ToRole="tblMstCountry" />
+          <NavigationProperty Name="tblUserInfoes" Relationship="db_PLModel.FK_tblUserInfo_tblMstState" FromRole="tblMstState" ToRole="tblUserInfo" />
+        </EntityType>
+        <Association Name="FK_tblMstCity_tblMstState">
+          <End Role="tblMstState" Type="Self.tblMstState" Multiplicity="0..1" />
+          <End Role="tblMstCity" Type="Self.tblMstCity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblMstState">
+              <PropertyRef Name="StateId" />
+            </Principal>
+            <Dependent Role="tblMstCity">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblMstState_tblMstCountry1">
+          <End Role="tblMstCountry" Type="Self.tblMstCountry" Multiplicity="0..1" />
+          <End Role="tblMstState" Type="Self.tblMstState" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblMstCountry">
+              <PropertyRef Name="CountryId" />
+            </Principal>
+            <Dependent Role="tblMstState">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="db_PLEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblMstCities" EntityType="Self.tblMstCity" />
+          <EntitySet Name="tblMstCountries" EntityType="Self.tblMstCountry" />
+          <EntitySet Name="tblMstStates" EntityType="Self.tblMstState" />
+          <AssociationSet Name="FK_tblMstCity_tblMstState" Association="Self.FK_tblMstCity_tblMstState">
+            <End Role="tblMstState" EntitySet="tblMstStates" />
+            <End Role="tblMstCity" EntitySet="tblMstCities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblMstState_tblMstCountry1" Association="Self.FK_tblMstState_tblMstCountry1">
+            <End Role="tblMstCountry" EntitySet="tblMstCountries" />
+            <End Role="tblMstState" EntitySet="tblMstStates" />
+          </AssociationSet>
+          <EntitySet Name="tblUserInfoes" EntityType="db_PLModel.tblUserInfo" />
+          <AssociationSet Name="FK_tblUserInfo_tblMstCity1" Association="db_PLModel.FK_tblUserInfo_tblMstCity1">
+            <End Role="tblMstCity" EntitySet="tblMstCities" />
+            <End Role="tblUserInfo" EntitySet="tblUserInfoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblUserInfo_tblMstCountry" Association="db_PLModel.FK_tblUserInfo_tblMstCountry">
+            <End Role="tblMstCountry" EntitySet="tblMstCountries" />
+            <End Role="tblUserInfo" EntitySet="tblUserInfoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblUserInfo_tblMstState" Association="db_PLModel.FK_tblUserInfo_tblMstState">
+            <End Role="tblMstState" EntitySet="tblMstStates" />
+            <End Role="tblUserInfo" EntitySet="tblUserInfoes" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="tblUserInfo">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Mobile" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="CountryId" Type="Int32" />
+          <Property Name="StateId" Type="Int32" />
+          <Property Name="CityId" Type="Int32" />
+          <Property Name="Pincode" Type="String" MaxLength="6" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="tblMstCity" Relationship="db_PLModel.FK_tblUserInfo_tblMstCity1" FromRole="tblUserInfo" ToRole="tblMstCity" />
+          <NavigationProperty Name="tblMstCountry" Relationship="db_PLModel.FK_tblUserInfo_tblMstCountry" FromRole="tblUserInfo" ToRole="tblMstCountry" />
+          <NavigationProperty Name="tblMstState" Relationship="db_PLModel.FK_tblUserInfo_tblMstState" FromRole="tblUserInfo" ToRole="tblMstState" />
+        </EntityType>
+        <Association Name="FK_tblUserInfo_tblMstCity1">
+          <End Type="db_PLModel.tblMstCity" Role="tblMstCity" Multiplicity="0..1" />
+          <End Type="db_PLModel.tblUserInfo" Role="tblUserInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblMstCity">
+              <PropertyRef Name="CityId" />
+            </Principal>
+            <Dependent Role="tblUserInfo">
+              <PropertyRef Name="CityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblUserInfo_tblMstCountry">
+          <End Type="db_PLModel.tblMstCountry" Role="tblMstCountry" Multiplicity="0..1" />
+          <End Type="db_PLModel.tblUserInfo" Role="tblUserInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblMstCountry">
+              <PropertyRef Name="CountryId" />
+            </Principal>
+            <Dependent Role="tblUserInfo">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblUserInfo_tblMstState">
+          <End Type="db_PLModel.tblMstState" Role="tblMstState" Multiplicity="0..1" />
+          <End Type="db_PLModel.tblUserInfo" Role="tblUserInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblMstState">
+              <PropertyRef Name="StateId" />
+            </Principal>
+            <Dependent Role="tblUserInfo">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="db_PLModelStoreContainer" CdmEntityContainer="db_PLEntities">
+          <EntitySetMapping Name="tblMstCities">
+            <EntityTypeMapping TypeName="db_PLModel.tblMstCity">
+              <MappingFragment StoreEntitySet="tblMstCity">
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblMstCountries">
+            <EntityTypeMapping TypeName="db_PLModel.tblMstCountry">
+              <MappingFragment StoreEntitySet="tblMstCountry">
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblMstStates">
+            <EntityTypeMapping TypeName="db_PLModel.tblMstState">
+              <MappingFragment StoreEntitySet="tblMstState">
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="StateName" ColumnName="StateName" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblUserInfoes">
+            <EntityTypeMapping TypeName="db_PLModel.tblUserInfo">
+              <MappingFragment StoreEntitySet="tblUserInfo">
+                <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
